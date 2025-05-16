@@ -1,5 +1,5 @@
 NAME = so_long
-SRCS = so_long.c map_parser.c render.c utils.c gnl/get_next_line.c printf/ft_printf.c
+SRCS = so_long.c map_parser.c render.c utils.c movement.c path_is_valid.c gnl/get_next_line.c printf/ft_printf.c
 
 CFLAGS = -Wall -Werror -Wextra -I../../minilibx-linux -g
 LFLAGS = -L../../minilibx-linux -lmlx -lX11 -lXext

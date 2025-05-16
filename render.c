@@ -12,50 +12,54 @@
 
 #include "so_long.h"
 
-void    load_images(t_game *game)
+void	load_images(t_game *game)
 {
-    int w;
-    int h;
+	int	w;
+	int	h;
 
-    //game->knight = mlx_xpm_file_to_image(game->mlx, "assets/knight.xpm", &w, &h);
-   // game->knight_down = mlx_xpm_file_to_image(game->mlx, "assets/knight_down.xpm", &w, &h);
-    //game->knight_hit = mlx_xpm_file_to_image(game->mlx, "assets/knight_hit.xpm", &w, &h);
-    game->dirt = mlx_xpm_file_to_image(game->mlx, "assets/dirt.xpm", &w, &h);
-    game->coins = mlx_xpm_file_to_image(game->mlx, "assets/coins.xpm", &w, &h);
-    game->sky = mlx_xpm_file_to_image(game->mlx, "assets/sky.xpm", &w, &h);
-    //game->slime = mlx_xpm_file_to_image(game->mlx, "assets/slime.xpm", &w, &h);
-    game->wall = mlx_xpm_file_to_image(game->mlx, "assets/wall.xpm", &w, &h);
-
+	game->strawberry = mlx_xpm_file_to_image(game->mlx, "assets/strawberry.xpm",
+			&w, &h);
+	game->background = mlx_xpm_file_to_image(game->mlx, "assets/background.xpm",
+			&w, &h);
+	game->end = mlx_xpm_file_to_image(game->mlx, "assets/end.xpm", &w, &h);
+	game->wall = mlx_xpm_file_to_image(game->mlx, "assets/wall.xpm", &w, &h);
+	game->frog = mlx_xpm_file_to_image(game->mlx, "assets/frog.xpm", &w, &h);
+	game->frog_jump = mlx_xpm_file_to_image(game->mlx, "assets/frog_jump.xpm",
+			&w, &h);
+	game->frog_left = mlx_xpm_file_to_image(game->mlx, "assets/frog_left.xpm",
+			&w, &h);
+	game->frog_down = mlx_xpm_file_to_image(game->mlx, "assets/frog_down.xpm",
+			&w, &h);
 }
 
-void    put_image(t_game *game)
+void	put_image(t_game *game)
 {
-    int x;
-    int y;
+	int	x;
+	int	y;
 
-    x = 0;
-    //mettre le wall sur tous les 1
-    while (game->map[x])
-    {
-        y = 0;
-        while (game->map[x][y])
-        {
-            mlx_put_image_to_window(game->mlx, game->window, game->sky, y * 16, x * 16);
-            if (game->map[x][y] == '1')
-                mlx_put_image_to_window(game->mlx, game->window, game->wall, y * 16, x * 16);
-            else if (game->map[x][y] == '2')
-                mlx_put_image_to_window(game->mlx, game->window, game->dirt, y * 16, x * 16);
-            else if (game->map[x][y] == 'C')
-                mlx_put_image_to_window(game->mlx, game->window, game->coins, y * 16, x * 16);
-            y++;
-        }
-        x++;
-    }
-    //mettre la dirt sur tous les 2
-    //mettre les coins sur tous les C
-    //mettre le knigth sur le P
-    //remplacer le knith hit si jamais (je pense quil faut faire une fonction quand le joueur est sur les coordones du mob)
-    //remplacer le knigth quand le joueur appuis sur S(je pense pas dans cette fonction)
-    // mettre le sky, sur touts les 0 et aussi en arriere plan du knigth et des mobs
-
+	x = 0;
+	// mettre le wall sur tous les 1
+	while (x < game->map_height)
+	{
+		y = 0;
+		while (y < game->map_width)
+		{
+			mlx_put_image_to_window(game->mlx, game->window, game->background, y
+				* 32, x * 32);
+			if (game->map[x][y] == '1')
+				mlx_put_image_to_window(game->mlx, game->window, game->wall, y
+					* 32, x * 32);
+			else if (game->map[x][y] == 'C')
+				mlx_put_image_to_window(game->mlx, game->window,
+					game->strawberry, y * 32, x * 32);
+			else if (game->map[x][y] == 'E')
+				mlx_put_image_to_window(game->mlx, game->window, game->end, y
+					* 32, x * 32);
+			y++;
+		}
+		x++;
+	}
+	mlx_put_image_to_window(game->mlx, game->window, game->frog, game->player_y
+		* 32, game->player_x * 32);
+	game->map[game->player_x][game->player_y] = '0';
 }
